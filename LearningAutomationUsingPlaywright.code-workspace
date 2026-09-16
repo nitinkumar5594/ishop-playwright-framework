@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "name": "LearningAutomationUsingPlaywright",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.eclipse_binaries": true
+    }
+  }
+}

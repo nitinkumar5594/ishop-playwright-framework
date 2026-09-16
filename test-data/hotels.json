@@ -1,0 +1,18 @@
+{
+  "searchData": {
+    "destinationCity": "Goa",
+    "checkInOffsetDays": 15,
+    "stayDurationNights": 2,
+    "rooms": 1,
+    "adults": 2,
+    "children": 0
+  },
+  "guestDetails": {
+    "title": "Mr",
+    "firstName": "Nitin",
+    "lastName": "Kumar",
+    "email": "nitin.kumar@example.com",
+    "mobile": "9876543210",
+    "specialRequest": "Non-smoking high floor room please"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "learning-automation-using-playwright",
+  "version": "1.0.0",
+  "description": "Playwright Automation Framework for iShop Portal (Hotels & Flights)",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "env:select": "node config/select-env.js",
+    "test:hotel": "playwright test tests/hotels/hotel_booking_flow.spec.js --project=chromium --headed",
+    "test:hotel:uat": "ENV=uat playwright test tests/hotels/hotel_booking_flow.spec.js --project=chromium --headed",
+    "test:hotel:preprod": "ENV=preprod playwright test tests/hotels/hotel_booking_flow.spec.js --project=chromium --headed",
+    "test:hotel:prod": "ENV=prod playwright test tests/hotels/hotel_booking_flow.spec.js --project=chromium --headed",
+    "test:hotel:e2e": "playwright test tests/hotels/hotel_booking_flow.spec.js --project=chromium --headed",
+    "test:hotel:headless": "playwright test tests/hotels/hotel_booking_flow.spec.js --project=chromium",
+    "test:flight": "playwright test tests/flights/flight_booking_flow.spec.js --project=chromium --headed",
+    "test:flight:uat": "ENV=uat playwright test tests/flights/flight_booking_flow.spec.js --project=chromium --headed",
+    "test:flight:preprod": "ENV=preprod playwright test tests/flights/flight_booking_flow.spec.js --project=chromium --headed",
+    "test:flight:prod": "ENV=prod playwright test tests/flights/flight_booking_flow.spec.js --project=chromium --headed",
+    "test:flight:e2e": "playwright test tests/flights/flight_booking_flow.spec.js --project=chromium --headed",
+    "test:headed": "playwright test --headed --project=chromium",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
+  },
+  "keywords": ["playwright", "ishop", "automation", "reward360"],
+  "author": "Nitin Bisne",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0"
+  }
+}

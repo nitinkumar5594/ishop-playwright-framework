@@ -1,0 +1,24 @@
+{
+  "name": "playwright-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol configuration for browser automation with Playwright",
+  "server": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-playwright"
+    ],
+    "env": {
+      "HEADLESS": "true"
+    }
+  },
+  "capabilities": {
+    "tools": [
+      "browser_navigate",
+      "browser_click",
+      "browser_fill",
+      "browser_screenshot",
+      "browser_snapshot"
+    ]
+  }
+}

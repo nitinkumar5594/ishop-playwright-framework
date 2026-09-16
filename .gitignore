@@ -1,0 +1,21 @@
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+.env
+.DS_Store
+.eclipse_binaries/
+
+# Generated reports (may contain URLs / auth tokens)
+/reports/
+
+# MCP local config (machine-specific)
+.mcp.json
+
+# Claude / IDE agent metadata
+.claude/
+.vscode/
+
+# macOS
+*.DS_Store

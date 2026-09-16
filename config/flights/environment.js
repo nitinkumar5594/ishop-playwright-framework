@@ -1,0 +1,50 @@
+// @ts-check
+/**
+ * Multi-Environment Configuration
+ * Supports UAT, Preprod, and Production
+ * 
+ * To switch environment:
+ * Option 1: Change ACTIVE_ENV below ('uat' | 'preprod' | 'prod')
+ * Option 2: Pass environment variable in terminal: ENV=uat npm run test:hotel
+ * Option 3: Use dedicated scripts: npm run test:hotel:uat, npm run test:hotel:prod
+ */
+
+export const ENVIRONMENTS = {
+  uat: {
+    name: 'UAT',
+    ssoUrl: 'https://ishop-uat.reward360.in/sso?token=eyJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.Iq3Lxbj8OI39sK9NENuCfdK3ZPzHMHCXm4JbTg5wHGnrAO_WKSCGlSVBYQPkBWqxKeKlUiPrACcPMQcw8jpwcxVnMAR_KfHyJrPfXwQ2iGl7MrVVSBYxNb4jrIbeC6oJzAB8U3qJoR-u6rs0h5wFLB7w1O_kDuaC-61-NVYXPIwotFEXR1Ex_37OV9Kb7nPp8s2BlVVNTf-KUaJOl6lGUiJ_yEqumHj-bLbbK8js6jNmNhJK6RvQBtmrvQa5AwFACdD8gk4cSamyiOduEqEkX8un06BqSQhc47tn0YRXEvgXLLdckPjpTxOYLO5oyelHhLJ21jxicePxzhbGp04gYOLUhMs7AaVfO4swoiSAl7RqwCru2O_hADYU_sFR5v9FFLMuK4v-Dl5VE6ftcrCfIsfySpITaF2pyHf9SkePUoLsg8QDArzHmceP88G3JpdhuOoYG-rFaXToyQdJV2ipj7-XkyLm0naDJg1ZXwMePdQfTmDqCDwCCcRaKPrP3RKnKBbVNQJXN9S1ViApHMJ7pNt64tRHVvzfPcKeZTUtyGSijndTedQF6IA6lDfOJ-2P1hDPjdVP1AQovS59b6kyiKfDfM8yYGdQtPMvrCrlXjHT21K2E9EkYhsTfDfBJpzqEce2SK6eBlx6yie0kuzsQs9WrIRZmekjWWtGEjmcorU.gxre2Bk8OIA061gYVUgFvQ.enBs-Y_9HP7tt_e1Fbi_1fK6A5GKc7tHcDt6TwQNuxXTqS-MQXQONcIXJgpX7FiY9FY4_uts0XgwRQxDSOwNiYbsTZMpUK0cQlA0rv7y2_IhwSNPxW-gj9zk9Qi074M_JoJTuiwry6ebltx_hzOwmsp7WXrqi9aAwbV0DqoSkRCP5snV9RFr5jPRhPTCTtqswS5seWc2HdbevI_ziPQVrtN2nrg09FtzrlN45OrbyFH-ranAZXCmF_R1GOylH3w66GT_AWQfIw5m1qpqAY8XJAswg2T6OopGfuH7LE4it5Df9ttA5zMae9UJjhnnoFtN.Kcj-kNMbdLkHfEC7UkibWSShbnek4mJK2aYD3hYV2_E',
+    portalBaseUrl: 'https://ishop-qa.reward360.in',
+  },
+  preprod: {
+    name: 'Preprod',
+    ssoUrl: 'https://preprod.ishoprewards.com/sso?token=eyJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.WSs6R0AUiMfw812ptc_wKDVRjvSJYAXL0eAx5ex2yI3_N0Y3hU0yAJ707Wwlhh0GHTyjQFCTVYB7HzAca-Z4zjPfi7Wds_RzPjZCp5I7PGemiyZuQqgNr9GNlh_YLCwCln1FwkhscyWykPpNieMond1DLMhMDwmIGzs4jSjx42brM3s6-YqHqHWTnR9mE4KKyInXOEt2pW0Vf2DbLg8Jl1Rh_Bo_X0fKKpFAhyKn8An61fQ2zMLobZsCvecY77OHNbAsG0-PGpvt3KCCNTEEba4iZgM1mcZrId32GlhcqsDRvt9lnGmo0pryfL_7erRW1PMo1Ych7JgFoAnyxJa9FVy5ogwqrrZsu6lxX62RBqqmMqNbiBH5e_me_Yx4tET_QBXMudVQVRxJH5GNW40uQDsTAI2Rbg_F-21cjjahcIODAky0Sf6vpK9GI6MJM85S9-825Dqcbrx0oHzo4jVv-jcNYExccks7KNRWlxlyNhrJa3QGUz49CeQ5ktF4N5pTVK6-qLQcpzN4je4ZVEbni-r9vXryYRAMR3IoWjdrbH2MtBq7X9__wXuWmSexRwzzfTUfCIy3PlRnXB2bcGI5JH6t29i1z_Nt2GVvIzxYOia5KxfnHY2wgRbEsd7kx8P8PZ7LrAozs8tDrTn0q8GuldCIF8HLjmibnOarJBNTJSw.ThsqZFH27uugw7QUYAr0uw.dhFbj-QFlcZltXI5EvJnR7yISFKkzsYWUOEtIWltZU_4VYLC_S-k1nhK0j3cXwguMW5jzhVPj-TXjIDLISfUvX3GJgMay0IrbiEk9w8FyBSThC2_kS28W5TXWfx5L31kEujyYWyXNGLcw0sgHhHpMGQY8Wm4fDcftrjl5fbzGer19_kr30yByx8LmiGQfcad4XbwhfnDut2yGYsFP-xGqXpzoAO5QkbcvGubU_SnvmYrHIkeT5bl9KkxiaHkxyR3McTLMMhs8C0lihN8hm84SK6EYw8-SB6y2OWpbWdLI0w-va88LyaTe0L2MoB_GbQszBjVehye6t14ERy5LPrPXQ.ryXNqWYJxvwctqTM-ZZOcsZZOK_PkjDmv2qAozCf7aY',
+    portalBaseUrl: 'https://preprod.ishoprewards.com',
+  },
+  prod: {
+    name: 'Production',
+    ssoUrl: 'https://ishop.reward360.in/sso?token=eyJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiYWxnIjoiUlNBLU9BRVAtMjU2In0.hpp9mJylM-k9h8hnZS6kzsdbL_lzS50m6bdd91RLcl4hxRZOXZYJM0RAsNwzJK-sdNPP02LPLTuusz_7-S9OcbRE0dho52AZcnLcSA_T0SxnNQNcA8rr448aN8wsYJPeXVa9SDHev6z6zcdh1GvJf7GqIjQNs3K1t9JWEftgGykxqExnKhNjE4pheGnGP9hrCF6vmIwnM9KKKhG7_532KFiPl-ntb8ALTGPL89ySY_CvjQYj-ramo2tjfO0oDocYlZf93e0nlaWsDtwLGJHU1iHgamfeMLdQaOGbReD_8kQMZPJVOcxWOuxjqbydpD5zMDm3Es5dFZpqKgmRBQhticeicuOyUcjpHmbm2mrAcjcOWptRAp8sX059UP0wzkU7DdpkY5fD22ZxeLwUz1KKoJfYTjT3PFQ1Wyn0rSULlVyER_hax61XE7GS1UiGe5g8RzUe4UfXOcmgZ6Przqi0GydxJ2K7CvpsuPliOl5NU63UzWeLng6CZF9_rlNnRPVrkYyRlf8g0W9vn3On7nbpzBWRKKG2_ah20G0SNKeWdq-Iqfx9OG_2oLpDyIX18htj_oaWPsws3UdxZ04y766cDMWY-jNNdTFIULjvq4ZifvMG7lTZPV76eS7rfPMSX2xp0_L6DS2f-RUzo4C65nQkqxY4JeLcweVmACv-9n_BK8Y.hixSCXjfx9N_UjMvnLtdGQ.Z6pPvce8Voq4jZ25tsLvHNgIqn2845Cns_xFBam2GsYfc0aQEiSQOjRW4QGB8FnBFLMsDlK2muZc2bS4kN65-wD9Y8Hz6WTJiEtiC1o8bgBVlN3N2N7fjuXv4KwyjH4rddKslqVOlin_l4U3sRpWPtQ7ps9sjowtRoIte9jPMb8rIUt2UyinOslAo_rKKWk8kWziupC2iMePe5KpOkZQRSTy5wbLghMCS-eu7M3w3EJXPWW6oNUloj3c6B0tA0kERt8K5fl2Hg9lCrepIHnOU-BlNbfxwiKOZ_VBSvkmeg34ULQSkM5ByyOfGEQ3-tcC4AmR-FNdYDkI1dMi32HEs-UOpC-V8fSPNyTK--Cs3Lf2hk5RnEgNTvzx5bpaVv2_.KormGGfP2S4jf-5_R2w1gjvcXl-qMRWyk2LbBL3AfpM',
+    portalBaseUrl: 'https://ishop.reward360.in',
+  }
+};
+
+// Default active environment (change to 'uat', 'preprod', or 'prod')
+export const ACTIVE_ENV = (process.env.ENV || 'preprod').toLowerCase();
+
+// Get active configuration based on ACTIVE_ENV
+const selected = ENVIRONMENTS[ACTIVE_ENV] || ENVIRONMENTS.preprod;
+
+export const FLIGHT_ENV_CONFIG = {
+  envName: selected.name,
+  ssoUrl: selected.ssoUrl,
+  portalBaseUrl: selected.portalBaseUrl,
+  timeout: 30000,
+};
+
+// Backwards compatibility aliases
+export const ISHOP_ENV_CONFIG = FLIGHT_ENV_CONFIG;
+
+export const FLIGHT_TRAVEL_TYPES = [
+  'Flights',
+  'Hotels',
+  'Bus'
+];
