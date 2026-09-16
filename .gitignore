@@ -1,0 +1,17 @@
+cd "/Users/nitinkumar.b/Downloads/26_feb_2026/15sept_Downloads/New eclipse file/eclipse-jee-2023-12-R-linux-gtk-x86_64/eclipse"
+
+# Initialize git repo
+git init
+
+# Set your identity (one-time setup if not done already)
+git config user.name "Your Name"
+git config user.email "your-email@example.com"
+
+# Stage all files (gitignore will auto-exclude node_modules, reports, etc.)
+git add .
+
+# Verify what will be committed (check no tokens are included)
+git status
+
+# Create first commit
+git commit -m "feat: initial commit - iShop Playwright automation framework (Flights + Hotels)"
