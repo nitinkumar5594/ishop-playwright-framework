@@ -154,7 +154,11 @@ export class FlightHomePage {
       .locator('input[formcontrolname="fromCity"]')
       .inputValue()
       .catch(() => '');
-    if (currentOrigin && currentOrigin.toLowerCase() === cityName.toLowerCase()) {
+    if (currentOrigin && (
+      currentOrigin.toLowerCase() === cityName.toLowerCase() ||
+      currentOrigin.toLowerCase().includes(cityName.toLowerCase()) ||
+      cityName.toLowerCase().includes(currentOrigin.toLowerCase())
+    )) {
       throw new Error(
         `❌ Same-city selection blocked! Origin is already "${currentOrigin}". ` +
         `Destination "${cityName}" cannot be the same as the Origin. Please choose a different city.`

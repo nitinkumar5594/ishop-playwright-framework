@@ -13,7 +13,7 @@ const rl = readline.createInterface({
 console.log('\n================================================================================');
 console.log('                 🌍 SELECT REWARD360 TEST ENVIRONMENT');
 console.log('================================================================================');
-console.log('  [1] UAT        -> https://ishop-uat.reward360.in');
+console.log('  [1] UAT        -> https://ishop-qa.reward360.in');
 console.log('  [2] Preprod    -> https://preprod.ishoprewards.com');
 console.log('  [3] Production -> https://ishop.reward360.in');
 console.log('================================================================================');

@@ -1,6 +1,7 @@
 // @ts-check
 import fs from "fs";
 import path from "path";
+import { testCaseTracker } from "../../test-cases/TestCaseTracker.js";
 
 /**
  * Enhanced Custom Script Reporter
@@ -142,6 +143,23 @@ export class ScriptReporter {
   }
 
   /**
+   * Explicitly link and record a Test Case execution
+   * @param {string} testCaseId
+   * @param {"PASSED" | "FAILED"} status
+   * @param {object} [details={}]
+   */
+  recordTestCase(testCaseId, status = "PASSED", details = {}) {
+    try {
+      testCaseTracker.recordExecution(testCaseId, status, {
+        title: this.scriptName,
+        ...details
+      });
+    } catch (e) {
+      this.warn(`Failed to record test case ${testCaseId}: ${e.message}`);
+    }
+  }
+
+  /**
    * Generate standalone HTML report & plain-text .log file, then print execution summary
    * @param {"PASSED" | "FAILED" | string} [status="PASSED"]
    * @param {string} [finalUrl=""]
@@ -153,6 +171,27 @@ export class ScriptReporter {
     const totalSteps = this.steps.length;
     const passedSteps = this.steps.filter(s => s.status === "PASSED").length;
     const isPassed = status.includes("PASSED");
+
+    // Automatically record test execution in TestCaseTracker
+    try {
+      const p = this.scriptPath.toLowerCase();
+      let autoId = null;
+      if (p.includes("hotel")) {
+        autoId = p.includes("neg") ? "TC_HOTEL_NEG_001" : "TC_HOTEL_POS_004";
+      } else if (p.includes("flight")) {
+        autoId = p.includes("neg") ? "TC_FLIGHT_NEG_001" : "TC_FLIGHT_POS_004";
+      }
+
+      if (autoId) {
+        testCaseTracker.recordExecution(autoId, isPassed ? "PASSED" : "FAILED", {
+          title: this.scriptName,
+          error: errorObj ? (typeof errorObj === "string" ? errorObj : errorObj.message) : null,
+          duration: `${duration}s`
+        });
+      }
+    } catch (trackerErr) {
+      console.warn("[ScriptReporter] Could not auto-record execution in TestCaseTracker:", trackerErr.message);
+    }
 
     if (errorObj) {
       const errMsg = typeof errorObj === "string" ? errorObj : errorObj.message || String(errorObj);

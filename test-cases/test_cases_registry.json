@@ -1,0 +1,577 @@
+{
+  "lastUpdated": "2026-09-23T08:42:17.299Z",
+  "summary": {
+    "totalTestCases": 28,
+    "totalExecutions": 20,
+    "passedExecutions": 12,
+    "failedExecutions": 8,
+    "hotels": {
+      "total": 14,
+      "positive": 8,
+      "negative": 6
+    },
+    "flights": {
+      "total": 14,
+      "positive": 8,
+      "negative": 6
+    }
+  },
+  "testCases": [
+    {
+      "id": "TC_HOTEL_POS_001",
+      "module": "hotels",
+      "category": "positive",
+      "title": "Verify Hotel Destination City Search and Auto-suggestion Selection",
+      "description": "User searches for a valid city (e.g. New Delhi, Goa) and selects the auto-suggested option.",
+      "severity": "CRITICAL",
+      "preconditions": "User is on Hotel Search page (/compare-stay)",
+      "steps": [
+        "Navigate to Hotel tab under Travel & Stays",
+        "Type destination city name into City search input",
+        "Wait for dropdown suggestions to appear",
+        "Click on matching destination item"
+      ],
+      "expectedResult": "Selected city is populated into the destination field and suggestion list closes.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_POS_002",
+      "module": "hotels",
+      "category": "positive",
+      "title": "Verify Check-in and Check-out Date Selection from Calendar (15th - 16th October)",
+      "description": "User opens the dual-month calendar and selects valid future dates (15th Oct Check-in, 16th Oct Check-out).",
+      "severity": "CRITICAL",
+      "preconditions": "Destination city is selected, calendar is visible",
+      "steps": [
+        "Click Date picker trigger ('Select Date')",
+        "Verify October 2026 month is visible or navigate forward",
+        "Click 15th October gridcell for Check-in",
+        "Click 16th October gridcell for Check-out"
+      ],
+      "expectedResult": "Check-in shows 15 Oct and Check-out shows 16 Oct in search bar.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_POS_003",
+      "module": "hotels",
+      "category": "positive",
+      "title": "Verify Room and Guest Configuration Selection",
+      "description": "User configures valid number of rooms, adults, and child guests.",
+      "severity": "HIGH",
+      "preconditions": "User is on Hotel Search page",
+      "steps": [
+        "Click on Guests & Rooms selector",
+        "Adjust adults (e.g. 2 adults) and rooms (1 room)",
+        "Click Apply / Done button"
+      ],
+      "expectedResult": "Guest summary updates to '2 Guests, 1 Room'.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_POS_004",
+      "module": "hotels",
+      "category": "positive",
+      "title": "Verify Hotel Search Results Displayed on Listing Page",
+      "description": "Click 'Search' button and confirm hotel cards load with pricing, rating, and facilities.",
+      "severity": "BLOCKER",
+      "preconditions": "Search parameters (City, Dates, Guests) are filled",
+      "steps": [
+        "Click 'Search' button",
+        "Wait for URL transition to /hotels/hotel-list",
+        "Verify hotel results count and hotel cards display"
+      ],
+      "expectedResult": "Listing page shows available hotels with pricing and 'Book Now' buttons.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_POS_005",
+      "module": "hotels",
+      "category": "positive",
+      "title": "Verify Hotel Details Navigation & Book Now Trigger",
+      "description": "Click 'Book Now' on any listed hotel card to open Hotel Details tab/page.",
+      "severity": "HIGH",
+      "preconditions": "Hotels listing page is displayed",
+      "steps": [
+        "Center target hotel card in viewport",
+        "Click 'Book Now' button on hotel card",
+        "Switch context if opened in new tab"
+      ],
+      "expectedResult": "Hotel details page loads showing hotel overview and room choices.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_POS_006",
+      "module": "hotels",
+      "category": "positive",
+      "title": "Verify Room Selection and Booking Proceed",
+      "description": "Click 'Select Room' button and book an available room option.",
+      "severity": "HIGH",
+      "preconditions": "Hotel details page is loaded",
+      "steps": [
+        "Click 'Select Room' button to scroll to room grid",
+        "Select room option (e.g. Deluxe Room / Standard)",
+        "Click 'Book' button on selected room"
+      ],
+      "expectedResult": "Proceeds towards checkout or policy confirmation dialog.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_POS_007",
+      "module": "hotels",
+      "category": "positive",
+      "title": "Verify Cancellation Policy Modal and Continue Action",
+      "description": "Handle cancellation policy dialog if displayed and click Continue.",
+      "severity": "MEDIUM",
+      "preconditions": "Room booking button was clicked",
+      "steps": [
+        "Detect policy modal popup",
+        "Verify policy text is rendered",
+        "Click 'CONTINUE' button on modal"
+      ],
+      "expectedResult": "Modal closes and user progresses to guest details / checkout page.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_POS_008",
+      "module": "hotels",
+      "category": "positive",
+      "title": "Verify Terms & Conditions Consent and Final Checkout",
+      "description": "Scroll to bottom of checkout page, check mandatory consent box and proceed.",
+      "severity": "CRITICAL",
+      "preconditions": "User is on Review/Checkout page",
+      "steps": [
+        "Dismiss any blocking cookie banner",
+        "Scroll to bottom of checkout page",
+        "Check mandatory Terms & Conditions consent checkbox",
+        "Click Continue / Proceed to Payment"
+      ],
+      "expectedResult": "Consent is recorded and user advances to payment gateway.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_NEG_001",
+      "module": "hotels",
+      "category": "negative",
+      "title": "Verify Validation when Searching with Empty Destination City",
+      "description": "Click search button without entering any destination city.",
+      "severity": "HIGH",
+      "preconditions": "Hotel search page is open, city field is cleared",
+      "steps": [
+        "Clear destination city field",
+        "Click Search Hotels button"
+      ],
+      "expectedResult": "Search is prevented; validation message prompts user to select a city.",
+      "totalExecutions": 7,
+      "passedCount": 5,
+      "failedCount": 2,
+      "lastStatus": "PASSED",
+      "lastExecutedAt": "2026-09-23T08:39:47.307Z",
+      "lastError": "locator.waitFor: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#citySearchRef, input[placeholder*=\"Search City\" i], input[placeholder*=\"City\" i]').first() to be visible\u001b[22m\n\u001b[2m    21 × locator resolved to hidden <input type=\"text\" class=\"w-100\" id=\"citySearchRef\" autocomplete=\"off\" placeholder=\"Search City\" _ngcontent-ng-c1575149786=\"\"/>\u001b[22m\n"
+    },
+    {
+      "id": "TC_HOTEL_NEG_002",
+      "module": "hotels",
+      "category": "negative",
+      "title": "Verify Error Handling for Invalid / Non-existent Destination City",
+      "description": "Enter gibberish / non-existent city name (e.g. 'XYZABC9999').",
+      "severity": "MEDIUM",
+      "preconditions": "User is on Hotel Search page",
+      "steps": [
+        "Type non-existent text in city field",
+        "Verify dropdown auto-suggestions"
+      ],
+      "expectedResult": "No suggestions found or 'No results' message shown; user cannot select invalid city.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_NEG_003",
+      "module": "hotels",
+      "category": "negative",
+      "title": "Verify Past Dates are Disabled in Calendar",
+      "description": "Verify calendar disables dates prior to current date so past booking is impossible.",
+      "severity": "HIGH",
+      "preconditions": "Calendar picker is open",
+      "steps": [
+        "Inspect dates in calendar earlier than today (e.g. 1st September 2026)",
+        "Attempt to click disabled past date"
+      ],
+      "expectedResult": "Past dates have aria-disabled='true' and cannot be selected.",
+      "totalExecutions": 1,
+      "passedCount": 1,
+      "failedCount": 0,
+      "lastStatus": "PASSED",
+      "lastExecutedAt": "2026-09-23T08:39:46.844Z"
+    },
+    {
+      "id": "TC_HOTEL_NEG_004",
+      "module": "hotels",
+      "category": "negative",
+      "title": "Verify Check-out Date cannot be Earlier than Check-in Date",
+      "description": "Attempt to set check-out date prior to check-in date.",
+      "severity": "HIGH",
+      "preconditions": "Check-in date is selected as 15th October",
+      "steps": [
+        "Select 15th October as check-in",
+        "Attempt to select 10th October as check-out"
+      ],
+      "expectedResult": "Calendar prevents selection or resets check-in date to the earlier date.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_NEG_005",
+      "module": "hotels",
+      "category": "negative",
+      "title": "Verify Error Handling when Hotel / Room becomes Unavailable",
+      "description": "Handle supplier sold-out error banner on hotel details or booking page.",
+      "severity": "HIGH",
+      "preconditions": "Attempt to book a room that has 0 availability",
+      "steps": [
+        "Trigger room booking",
+        "Detect availability error modal or banner"
+      ],
+      "expectedResult": "Application shows availability warning and allows rerunning with another hotel/room.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_HOTEL_NEG_006",
+      "module": "hotels",
+      "category": "negative",
+      "title": "Verify Validation when Mandatory Consent Checkbox is Unchecked",
+      "description": "Attempt to click Continue on Checkout without accepting Terms & Conditions.",
+      "severity": "HIGH",
+      "preconditions": "On Checkout page, consent checkbox is unchecked",
+      "steps": [
+        "Leave consent checkbox unchecked",
+        "Click Continue to Payment"
+      ],
+      "expectedResult": "Form validation prevents navigation; prompts user to accept Terms & Conditions.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_POS_001",
+      "module": "flights",
+      "category": "positive",
+      "title": "Verify One-Way Flight Search with Valid Origin and Destination",
+      "description": "Select One-Way radio, enter Origin (DEL) and Destination (BOM) airports.",
+      "severity": "BLOCKER",
+      "preconditions": "User is on Flights page (/compare-fly)",
+      "steps": [
+        "Select 'One Way' trip type",
+        "Enter origin city 'Delhi' and select 'DEL - Indira Gandhi Intl'",
+        "Enter destination city 'Mumbai' and select 'BOM - Chhatrapati Shivaji Intl'"
+      ],
+      "expectedResult": "Both sectors populate airport codes DEL and BOM accurately.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_POS_002",
+      "module": "flights",
+      "category": "positive",
+      "title": "Verify Flight Departure Date Selection from Calendar",
+      "description": "Select valid future departure date and dismiss any auto-opened return calendar.",
+      "severity": "CRITICAL",
+      "preconditions": "Origin and destination are selected",
+      "steps": [
+        "Click Departure calendar trigger",
+        "Navigate to target month",
+        "Click valid date gridcell",
+        "Ensure return calendar overlay is dismissed"
+      ],
+      "expectedResult": "Departure date is set and search button is clickable without overlay blocking.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_POS_003",
+      "module": "flights",
+      "category": "positive",
+      "title": "Verify Passenger Count and Cabin Class Selection",
+      "description": "Configure travelers (Adults, Children, Infants) and Cabin Class (Economy/Business).",
+      "severity": "HIGH",
+      "preconditions": "Flights search form is displayed",
+      "steps": [
+        "Open Travelers & Cabin selector",
+        "Set adults count to 1 and cabin class to Economy",
+        "Click Apply"
+      ],
+      "expectedResult": "Traveler summary reflects '1 Adult, Economy'.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_POS_004",
+      "module": "flights",
+      "category": "positive",
+      "title": "Verify Flight Search Execution and Results Listing",
+      "description": "Click Search Flights button and verify results are rendered on listing page.",
+      "severity": "BLOCKER",
+      "preconditions": "All flight search parameters are filled",
+      "steps": [
+        "Click 'Search Flights' button",
+        "Wait for flight listing page navigation",
+        "Verify flight cards display with price, duration, and stops"
+      ],
+      "expectedResult": "Flight search results are rendered with available airlines (IndiGo, Air India, etc.).",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_POS_005",
+      "module": "flights",
+      "category": "positive",
+      "title": "Verify Flight Filtering by Stops and Airlines",
+      "description": "Apply filter (e.g. Non-Stop only) and verify results reflect filter.",
+      "severity": "MEDIUM",
+      "preconditions": "Flight listing results are displayed",
+      "steps": [
+        "Click 'Non-Stop' checkbox under Stops filter",
+        "Verify listing updates"
+      ],
+      "expectedResult": "Only non-stop flights are shown in the listing results.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_POS_006",
+      "module": "flights",
+      "category": "positive",
+      "title": "Verify Flight Fare Selection (Book Now)",
+      "description": "Select fare option on first available flight card and proceed.",
+      "severity": "HIGH",
+      "preconditions": "Flight listing is loaded",
+      "steps": [
+        "Center flight card in viewport",
+        "Click 'Book Now' / 'View Fares'",
+        "Select Standard / Saver Fare"
+      ],
+      "expectedResult": "Navigates to flight review / itinerary page.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_POS_007",
+      "module": "flights",
+      "category": "positive",
+      "title": "Verify Round-Trip Flight Search with Return Date",
+      "description": "Select Round-Trip option and set valid departure and return dates.",
+      "severity": "HIGH",
+      "preconditions": "Flights search form is displayed",
+      "steps": [
+        "Click 'Round Trip' radio button",
+        "Select Departure date",
+        "Select Return date after departure date",
+        "Click Search Flights"
+      ],
+      "expectedResult": "Search executes for both outbound and inbound flight journeys.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_POS_008",
+      "module": "flights",
+      "category": "positive",
+      "title": "Verify Passenger Details Entry on Flight Itinerary Page",
+      "description": "Enter valid primary passenger information (Title, First Name, Last Name, Email, Mobile).",
+      "severity": "CRITICAL",
+      "preconditions": "On Flight Itinerary / Checkout page",
+      "steps": [
+        "Fill Title, First Name, Last Name",
+        "Fill valid Email Address and Mobile Number",
+        "Click Continue to Addons / Payment"
+      ],
+      "expectedResult": "Passenger details accepted without validation errors.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_NEG_001",
+      "module": "flights",
+      "category": "negative",
+      "title": "Verify Validation when Origin and Destination are Identical",
+      "description": "Select Delhi (DEL) as Origin and Delhi (DEL) as Destination.",
+      "severity": "HIGH",
+      "preconditions": "Flights search form is open",
+      "steps": [
+        "Select DEL as Origin airport",
+        "Attempt to select DEL as Destination airport"
+      ],
+      "expectedResult": "Validation error: Origin and destination cannot be identical; search blocked.",
+      "totalExecutions": 9,
+      "passedCount": 4,
+      "failedCount": 5,
+      "lastStatus": "PASSED",
+      "lastExecutedAt": "2026-09-23T08:42:17.299Z",
+      "lastError": "\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m"
+    },
+    {
+      "id": "TC_FLIGHT_NEG_002",
+      "module": "flights",
+      "category": "negative",
+      "title": "Verify Validation when Searching with Empty Origin or Destination",
+      "description": "Leave destination blank and attempt to click Search Flights.",
+      "severity": "HIGH",
+      "preconditions": "Flights search form is displayed",
+      "steps": [
+        "Leave Destination input blank",
+        "Click Search Flights button"
+      ],
+      "expectedResult": "Validation error prompts user to select destination airport.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_NEG_003",
+      "module": "flights",
+      "category": "negative",
+      "title": "Verify Infant Count Cannot Exceed Adult Count",
+      "description": "Attempt to configure 2 infants with only 1 adult passenger.",
+      "severity": "HIGH",
+      "preconditions": "Traveler selection popup is open",
+      "steps": [
+        "Set adults count to 1",
+        "Attempt to increase infants count to 2"
+      ],
+      "expectedResult": "UI restricts infant count to <= adult count or shows aviation regulatory warning.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_NEG_004",
+      "module": "flights",
+      "category": "negative",
+      "title": "Verify Past Dates Disabled for Flight Departure",
+      "description": "Inspect departure calendar and verify dates earlier than today are disabled.",
+      "severity": "HIGH",
+      "preconditions": "Departure calendar is open",
+      "steps": [
+        "Inspect cells prior to current date in calendar grid",
+        "Attempt to click past date"
+      ],
+      "expectedResult": "Past dates have aria-disabled='true' and cannot be selected.",
+      "totalExecutions": 3,
+      "passedCount": 2,
+      "failedCount": 1,
+      "lastStatus": "PASSED",
+      "lastExecutedAt": "2026-09-23T08:42:16.221Z",
+      "lastError": "\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m"
+    },
+    {
+      "id": "TC_FLIGHT_NEG_005",
+      "module": "flights",
+      "category": "negative",
+      "title": "Verify Return Date cannot be Earlier than Departure Date",
+      "description": "In Round-Trip mode, verify return date cannot precede departure date.",
+      "severity": "HIGH",
+      "preconditions": "Round Trip selected, departure date set",
+      "steps": [
+        "Set departure date (e.g. 20th Oct)",
+        "Attempt to select return date prior to departure (e.g. 15th Oct)"
+      ],
+      "expectedResult": "Calendar disables dates earlier than departure or resets departure date.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    },
+    {
+      "id": "TC_FLIGHT_NEG_006",
+      "module": "flights",
+      "category": "negative",
+      "title": "Verify Validation for Malformed Traveler Email or Mobile",
+      "description": "Enter invalid email ('abc@@xyz') or invalid mobile ('123') on traveler details form.",
+      "severity": "MEDIUM",
+      "preconditions": "On Passenger Details checkout step",
+      "steps": [
+        "Enter invalid email string into Email field",
+        "Enter less than 10 digits in Mobile number field",
+        "Click Continue"
+      ],
+      "expectedResult": "Inline validation messages show 'Enter valid email' and 'Enter valid 10-digit mobile'.",
+      "totalExecutions": 0,
+      "passedCount": 0,
+      "failedCount": 0,
+      "lastStatus": "NOT_RUN",
+      "lastExecutedAt": null
+    }
+  ]
+}

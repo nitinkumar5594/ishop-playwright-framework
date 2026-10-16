@@ -57,9 +57,9 @@ test.describe("Hotel Automation Flow", () => {
       await hotelPage.clickHotelRadioButton();
       reporter.addStep(3, `Select Hotel Option & Center Search Card (Attempt ${attempt + 1})`, "PASSED", "JS executor centered search card");
 
-      // Step 4: Select Check-in and Check-out dates from calendar
-      await hotelPage.selectCheckInCheckOutDates();
-      reporter.addStep(4, `Select Check-in & Check-out Dates (Attempt ${attempt + 1})`, "PASSED", "Dates: Sept 15 - Sept 17");
+      // Step 4: Select Check-in and Check-out dates from calendar (15th - 16th October)
+      await hotelPage.selectCheckInCheckOutDates(15, 16, 'October', 2026);
+      reporter.addStep(4, `Select Check-in & Check-out Dates (Attempt ${attempt + 1})`, "PASSED", "Dates: Oct 15 - Oct 16");
 
       // Step 5: Click Search Hotels button
       await hotelPage.clickSearchHotels();

@@ -116,32 +116,146 @@ export class HotelHomePage {
   }
 
   /**
-   * Step 4: Select Check-In & Check-Out Dates
+   * Step 4: Select Check-In & Check-Out Dates (defaults to 15th Oct - 16th Oct)
+   * @param {number} [checkInDay=15] - Check-in date (default: 15)
+   * @param {number} [checkOutDay=16] - Check-out date (default: 16)
+   * @param {string} [monthName='October'] - Full month name (default: 'October')
+   * @param {number} [year=2026] - Target year (default: 2026)
    */
-  async selectCheckInCheckOutDates() {
+  async selectCheckInCheckOutDates(checkInDay = 15, checkOutDay = 16, monthName = 'October', year = 2026) {
     console.log('-------------------------------------------------------------');
-    console.log('Step 4: Select Check-In & Check-Out Dates...');
+    console.log(`Step 4: Select Check-In (${checkInDay} ${monthName}) & Check-Out (${checkOutDay} ${monthName})...`);
     console.log('-------------------------------------------------------------');
     await this.removeCookieBanner();
 
     // Click visible Date picker trigger
-    const dateTrigger = this.page.locator('h5:has-text("Select Date"), .hotel-in').filter({ visible: true }).first();
-    await dateTrigger.waitFor({ state: 'visible', timeout: 8000 });
+    const dateTrigger = this.page.locator(
+      'h5:has-text("Select Date"), .hotel-in, [placeholder*="Select Date" i], [data-test="checkin-date"], .mat-datepicker-toggle'
+    ).filter({ visible: true }).first();
+    await dateTrigger.waitFor({ state: 'visible', timeout: 10000 });
     await dateTrigger.click({ force: true });
     await this.page.waitForTimeout(1000);
 
-    // Click check-in date cell (e.g. 15) and check-out date cell (e.g. 17)
-    const cell15 = this.page.locator('[role="gridcell"]:has-text("15"), [role="gridcell"][aria-label*="15"]').first();
-    await cell15.waitFor({ state: 'visible', timeout: 5000 });
-    await cell15.click({ force: true });
+    // Wait for calendar grid / popup to appear
+    await this.page.locator('[role="gridcell"], [role="grid"], .mat-calendar, .calendar-grid').first()
+      .waitFor({ state: 'visible', timeout: 8000 })
+      .catch(() => {});
     await this.page.waitForTimeout(500);
 
-    const cell17 = this.page.locator('[role="gridcell"]:has-text("17"), [role="gridcell"][aria-label*="17"]').first();
-    await cell17.waitFor({ state: 'visible', timeout: 5000 });
-    await cell17.click({ force: true });
+    // Navigate months forward until target month (e.g. October) is visible
+    for (let attempt = 0; attempt < 12; attempt++) {
+      const monthFound = await this.page.evaluate((mName) => {
+        const text = (document.querySelector('.mat-calendar, .calendar-grid, [role="grid"], .cdk-overlay-container, .datepicker-container')?.innerText || '').toLowerCase();
+        const hasAria = Array.from(document.querySelectorAll('[role="gridcell"], .mat-calendar-body-cell')).some(c => {
+          const aria = (c.getAttribute('aria-label') || '').toLowerCase();
+          return aria.includes(mName.toLowerCase());
+        });
+        return hasAria || text.includes(mName.toLowerCase()) || text.includes(mName.substring(0, 3).toLowerCase());
+      }, monthName);
+
+      if (monthFound) {
+        console.log(`  📅 Target month "${monthName}" is visible in calendar.`);
+        break;
+      }
+
+      console.log(`  📅 Navigating forward to find "${monthName}"...`);
+      const moved = await this.page.evaluate(() => {
+        const nextBtn = document.querySelector(
+          '.mat-calendar-next-button, button[aria-label*="Next" i], [aria-label*="next month" i], .next-btn, button.next'
+        );
+        if (nextBtn) {
+          nextBtn.click();
+          return true;
+        }
+        const all = Array.from(document.querySelectorAll('button, span, a, [role="button"]'));
+        const next = all.find(el => {
+          const aria = (el.getAttribute('aria-label') || '').toLowerCase();
+          const title = (el.getAttribute('title') || '').toLowerCase();
+          const txt = el.textContent.trim();
+          return aria.includes('next') || title.includes('next') || txt === '›' || txt === '>';
+        });
+        if (next) { next.click(); return true; }
+        return false;
+      });
+
+      if (!moved) {
+        console.log('  ⚠️ Next arrow not found, stopping month navigation.');
+        break;
+      }
+      await this.page.waitForTimeout(600);
+    }
+
+    // Helper to click a specific date in the calendar
+    const clickCalendarDate = async (day, typeName) => {
+      console.log(`  Selecting ${typeName} Date: ${day} ${monthName} ${year}...`);
+      const monthShort = monthName.substring(0, 3);
+      
+      // Layer 1: Specific aria-label match on gridcell / mat-calendar-body-cell
+      const ariaSelectors = [
+        `[role="gridcell"][aria-label*="${day} ${monthName}" i]:not([aria-disabled="true"])`,
+        `[role="gridcell"][aria-label*="${day}"][aria-label*="${monthName}" i]:not([aria-disabled="true"])`,
+        `[role="gridcell"][aria-label*="${day}"][aria-label*="${monthShort}" i]:not([aria-disabled="true"])`,
+        `.mat-calendar-body-cell[aria-label*="${day}"][aria-label*="${monthName}" i]:not(.mat-calendar-body-disabled)`,
+        `.mat-calendar-body-cell[aria-label*="${day}"][aria-label*="${monthShort}" i]:not(.mat-calendar-body-disabled)`
+      ];
+
+      for (const sel of ariaSelectors) {
+        const loc = this.page.locator(sel).first();
+        if (await loc.isVisible().catch(() => false)) {
+          await loc.click({ force: true });
+          console.log(`  ✔ ${typeName} (${day} ${monthName}) clicked via selector: ${sel}`);
+          return;
+        }
+      }
+
+      // Layer 2: JavaScript click matching active/enabled cells
+      const clicked = await this.page.evaluate(({ d, mName, mShort }) => {
+        const cells = Array.from(document.querySelectorAll('[role="gridcell"], .mat-calendar-body-cell, td'));
+        // Try matching aria-label first
+        let target = cells.find(c => {
+          if (c.getAttribute('aria-disabled') === 'true' || c.classList.contains('mat-calendar-body-disabled')) return false;
+          const aria = (c.getAttribute('aria-label') || '').toLowerCase();
+          return aria.includes(String(d)) && (aria.includes(mName.toLowerCase()) || aria.includes(mShort.toLowerCase()));
+        });
+
+        // Fallback: match day number inside enabled cell
+        if (!target) {
+          target = cells.find(c => {
+            if (c.getAttribute('aria-disabled') === 'true' || c.classList.contains('mat-calendar-body-disabled')) return false;
+            const text = (c.innerText || '').trim();
+            return text === String(d) || text.startsWith(String(d) + '\n');
+          });
+        }
+
+        if (target) {
+          target.scrollIntoView({ block: 'center' });
+          target.click();
+          return target.getAttribute('aria-label') || target.innerText?.trim() || 'clicked';
+        }
+        return null;
+      }, { d: day, mName: monthName, mShort: monthShort });
+
+      if (clicked) {
+        console.log(`  ✔ ${typeName} (${day} ${monthName}) clicked via JS executor: ${clicked}`);
+      } else {
+        // Layer 3: Playwright fallback locator
+        const fallback = this.page.locator(`[role="gridcell"]:has-text("${day}"), .mat-calendar-body-cell:has-text("${day}")`)
+          .filter({ hasNot: this.page.locator('[aria-disabled="true"], .mat-calendar-body-disabled') })
+          .first();
+        await fallback.click({ force: true });
+        console.log(`  ✔ ${typeName} (${day} ${monthName}) clicked via fallback locator.`);
+      }
+    };
+
+    // Click Check-in date (15)
+    await clickCalendarDate(checkInDay, 'Check-In');
+    await this.page.waitForTimeout(800);
+
+    // Click Check-out date (16)
+    await clickCalendarDate(checkOutDay, 'Check-Out');
     await this.page.waitForTimeout(1000);
 
-    console.log('✓ Selected Check-in: Sept 15, Check-out: Sept 17.');
+    console.log(`✓ Selected Check-in: ${checkInDay} ${monthName}, Check-out: ${checkOutDay} ${monthName}.`);
   }
 
   /**
